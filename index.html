@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exaequo Voyages — Dossier Salon Outdoor</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap');
+
+:root {
+  --sand: #F7F4EF;
+  --warm-white: #FDFCFA;
+  --ink: #1C1917;
+  --ink-60: #6B6560;
+  --ink-30: #C2BEB9;
+  --terracotta: #C4622D;
+  --terra-light: #F9EDE5;
+  --terra-mid: #E8906A;
+  --green: #2D6A4F;
+  --green-light: #E8F3EE;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--warm-white);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: var(--sand);
+  border-right: 1px solid var(--ink-30);
+  padding: 28px 0;
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main { margin-left: 220px; padding: 40px 48px; max-width: 900px; }
+
+/* ── SIDEBAR ── */
+.logo {
+  padding: 0 24px 28px;
+  border-bottom: 1px solid var(--ink-30);
+  margin-bottom: 20px;
+}
+.logo-name {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.3px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.logo-tagline {
+  font-size: 11px;
+  color: var(--ink-60);
+  margin-top: 4px;
+  letter-spacing: .2px;
+}
+
+.nav-section {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-30);
+  padding: 0 24px 8px;
+  margin-top: 8px;
+}
+
+.nav-item {
+  display: block;
+  padding: 9px 24px;
+  font-size: 13px;
+  color: var(--ink-60);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all .15s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { color: var(--ink); background: rgba(0,0,0,.04); }
+.nav-item.active { color: var(--terracotta); border-left: 2px solid var(--terracotta); font-weight: 500; background: rgba(196,98,45,.06); }
+.nav-item.hot { color: var(--terracotta); font-weight: 500; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px 24px 0;
+  border-top: 1px solid var(--ink-30);
+  font-size: 11px;
+  color: var(--ink-60);
+  line-height: 1.7;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── TYPOGRAPHY ── */
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -.5px;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.page-subtitle {
+  font-size: 14px;
+  color: var(--ink-60);
+  margin-bottom: 32px;
+}
+h2 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 32px 0 14px;
+}
+h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+
+/* ── NOTICE ── */
+.notice {
+  border: 1px solid var(--ink-30);
+  border-left: 3px solid var(--terracotta);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  margin-bottom: 28px;
+  background: var(--terra-light);
+  color: var(--ink);
+}
+.notice strong { color: var(--terracotta); }
+
+.notice-green {
+  border-left-color: var(--green);
+  background: var(--green-light);
+}
+.notice-green strong { color: var(--green); }
+
+/* ── CARDS ── */
+.card {
+  border: 1px solid var(--ink-30);
+  border-radius: var(--radius);
+  padding: 20px;
+  background: var(--warm-white);
+  transition: border-color .15s;
+}
+.card:hover { border-color: #A8A29E; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+
+/* ── DEST CARDS ── */
+.dest-card { cursor: pointer; }
+.dest-card .flag { font-size: 24px; margin-bottom: 10px; display: block; }
+.dest-card .dest-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.dest-card .dest-meta { font-size: 12px; color: var(--ink-60); line-height: 1.6; }
+.dest-card .dest-price { font-size: 13px; font-weight: 600; color: var(--terracotta); margin-top: 10px; }
+.dest-card.featured { border-color: var(--terracotta); }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.badge-hot { background: var(--terra-light); color: var(--terracotta); border: 1px solid var(--terra-mid); }
+.badge-green { background: var(--green-light); color: var(--green); border: 1px solid #8BBBA6; }
+.badge-grey { background: var(--sand); color: var(--ink-60); border: 1px solid var(--ink-30); }
+
+/* ── STATS ROW ── */
+.stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.stat {
+  flex: 1; min-width: 90px;
+  border: 1px solid var(--ink-30);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  background: var(--sand);
+}
+.stat-n { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 300; color: var(--terracotta); line-height: 1; margin-bottom: 4px; }
+.stat-l { font-size: 11px; color: var(--ink-60); }
+
+/* ── META GRID ── */
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.meta-item { border: 1px solid var(--ink-30); border-radius: var(--radius-sm); padding: 12px 14px; background: var(--sand); }
+.meta-label { font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--ink-60); margin-bottom: 4px; }
+.meta-val { font-size: 13px; font-weight: 500; }
+.meta-sub { font-size: 11px; color: var(--ink-60); margin-top: 2px; }
+
+/* ── TABLE ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 24px; }
+.tbl th { text-align: left; font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--ink-60); padding: 8px 12px; border-bottom: 1px solid var(--ink-30); }
+.tbl td { padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.06); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--sand); }
+
+/* ── PROGRAMME ── */
+.prog-list { border: 1px solid var(--ink-30); border-radius: var(--radius); overflow: hidden; margin-bottom: 24px; }
+.prog-row { display: flex; gap: 16px; padding: 14px 18px; border-bottom: 1px solid rgba(0,0,0,.06); align-items: flex-start; }
+.prog-row:last-child { border-bottom: none; }
+.prog-row:nth-child(odd) { background: var(--sand); }
+.prog-day { font-size: 11px; font-weight: 600; color: var(--terracotta); min-width: 80px; flex-shrink: 0; padding-top: 2px; }
+.prog-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.prog-desc { font-size: 12px; color: var(--ink-60); }
+
+/* ── INCLUS GRID ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.inclus-list { list-style: none; font-size: 13px; color: var(--ink); line-height: 1.9; }
+.inclus-list li::before { content: '✓ '; color: var(--green); font-weight: 600; }
+.exclus-list { list-style: none; font-size: 13px; color: var(--ink-60); line-height: 1.9; }
+.exclus-list li::before { content: '— '; color: var(--ink-30); }
+
+/* ── PILLS ── */
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.pill {
+  border: 1px solid var(--ink-30);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--ink-60);
+  background: var(--warm-white);
+}
+
+/* ── PITCH ── */
+.pitch-block { margin-bottom: 20px; border: 1px solid var(--ink-30); border-radius: var(--radius); overflow: hidden; }
+.pitch-head { padding: 12px 18px; background: var(--sand); border-bottom: 1px solid var(--ink-30); }
+.pitch-label { font-size: 11px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; color: var(--terracotta); margin-bottom: 2px; }
+.pitch-context { font-size: 12px; color: var(--ink-60); }
+.pitch-body { padding: 16px 18px; font-size: 13px; line-height: 1.8; font-style: italic; color: var(--ink); }
+
+/* ── FAQ ── */
+.faq-cat { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-30); margin: 28px 0 8px; }
+.faq-item { border-bottom: 1px solid rgba(0,0,0,.08); }
+.faq-q {
+  padding: 14px 0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  color: var(--ink);
+}
+.faq-q .chevron { color: var(--ink-30); font-size: 16px; flex-shrink: 0; transition: transform .2s; }
+.faq-q.open .chevron { transform: rotate(180deg); color: var(--terracotta); }
+.faq-a { display: none; padding-bottom: 16px; font-size: 13px; line-height: 1.8; color: var(--ink-60); }
+.faq-a.open { display: block; }
+
+/* ── DETAIL PANEL ── */
+.detail-header {
+  border-bottom: 1px solid var(--ink-30);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.detail-flag { font-size: 40px; flex-shrink: 0; }
+.detail-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 300; letter-spacing: -.3px; margin-bottom: 4px; }
+.detail-sub { font-size: 13px; color: var(--ink-60); }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--ink-60); cursor: pointer;
+  border: none; background: none; margin-bottom: 24px; padding: 0;
+}
+.back-btn:hover { color: var(--ink); }
+
+/* ── TAG SPÉCIFICITÉ ── */
+.dest-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 600; letter-spacing: .3px;
+  padding: 3px 8px; border-radius: 20px; margin-top: 8px;
+  background: var(--sand); color: var(--ink-60);
+  border: 1px solid var(--ink-30);
+}
+
+/* ── ANCIENNE DEST ── */
+.anc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 10px; }
+.anc-card {
+  border: 1px solid var(--ink-30);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .15s;
+  background: var(--warm-white);
+}
+.anc-card:hover { border-color: #A8A29E; background: var(--sand); }
+.anc-flag { font-size: 22px; margin-bottom: 8px; }
+.anc-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.anc-desc { font-size: 11px; color: var(--ink-60); line-height: 1.5; }
+
+/* ── SECTION DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--ink-30); margin: 28px 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px; }
+  .mobile-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px; }
+  .mobile-nav-btn {
+    border: 1px solid var(--ink-30); border-radius: 20px;
+    padding: 6px 14px; font-size: 12px; font-weight: 500;
+    cursor: pointer; background: var(--warm-white); color: var(--ink-60);
+  }
+  .mobile-nav-btn.active { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+}
+@media (min-width: 721px) { .mobile-nav { display: none; } }
+
+/* ── CONTACT ── */
+.contact-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,.07); font-size: 13px; }
+.contact-row:last-child { border-bottom: none; }
+.contact-icon { font-size: 16px; width: 24px; text-align: center; flex-shrink: 0; }
+.contact-label { font-size: 11px; color: var(--ink-60); min-width: 80px; }
+.contact-val { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-name">Exaequo<br>Voyages</div>
+    <div class="logo-tagline">Trail à étapes · Aventure & Solidarité</div>
+  </div>
+
+  <div class="nav-section">Navigation</div>
+  <button class="nav-item hot active" onclick="goTo('destinations')">✦ Destinations</button>
+  <button class="nav-item" onclick="goTo('kadiouk')">★ Kadiouk — places dispo</button>
+
+  <div class="nav-section" style="margin-top:12px">Outils stand</div>
+  <button class="nav-item" onclick="goTo('pitch')">Pitchs à l'oral</button>
+  <button class="nav-item" onclick="goTo('faq')">FAQ & objections</button>
+  <button class="nav-item" onclick="goTo('contact')">Contact & arguments</button>
+
+  <div class="sidebar-footer">
+    02 31 53 94 17<br>
+    contact@exaequovoyages.com<br>
+    exaequovoyages.com<br>
+    <span style="color:var(--ink-30)">N° IM014180001</span>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- mobile nav -->
+  <div class="mobile-nav">
+    <button class="mobile-nav-btn active" onclick="goTo('destinations')">Destinations</button>
+    <button class="mobile-nav-btn" onclick="goTo('kadiouk')">★ Kadiouk</button>
+    <button class="mobile-nav-btn" onclick="goTo('pitch')">Pitch</button>
+    <button class="mobile-nav-btn" onclick="goTo('faq')">FAQ</button>
+    <button class="mobile-nav-btn" onclick="goTo('contact')">Contact</button>
+  </div>
+
+  <!-- ═══ DESTINATIONS ═══ -->
+  <div id="page-destinations" class="page active">
+
+    <div id="dest-list">
+      <div class="page-title">Destinations</div>
+      <div class="page-subtitle">9 destinations au total · Trails à étapes · Tout compris</div>
+
+      <div style="border:1px solid var(--ink-30);border-radius:var(--radius);padding:22px 24px;margin-bottom:28px;background:var(--sand)">
+        <p style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;letter-spacing:-.2px;margin-bottom:12px;line-height:1.3">Courir pour découvrir le monde autrement.</p>
+        <p style="font-size:13px;color:var(--ink-60);line-height:1.8;margin-bottom:14px">Depuis 2013, Exaequo Voyages organise des <strong style="color:var(--ink);font-weight:500">trails à étapes</strong> dans des destinations exceptionnelles — Kenya, Sénégal, Kirghizistan, Argentine, Irlande, Norvège, Écosse, Cap-Vert, Jordanie. Le concept est simple : courir le matin, découvrir un pays l'après-midi. Chaque séjour allie une course par étapes (plusieurs distances au choix) et une immersion culturelle profonde. Certains séjours intègrent également un projet solidaire local.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--ink-60)">
+          <span style="display:flex;align-items:center;gap:5px"><span style="color:var(--terracotta);font-weight:600">✦</span> 2 distances sur chaque séjour — marche ou course</span>
+          <span style="color:var(--ink-30)">·</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="color:var(--terracotta);font-weight:600">✦</span> 45–55 participants max</span>
+          <span style="color:var(--ink-30)">·</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="color:var(--terracotta);font-weight:600">✦</span> Tout compris (vol, hébergement, repas, transports, course)</span>
+          <span style="color:var(--ink-30)">·</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="color:var(--terracotta);font-weight:600">✦</span> Certains séjours incluent un projet solidaire local</span>
+          <span style="color:var(--ink-30)">·</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="color:var(--terracotta);font-weight:600">✦</span> Aucune barrière horaire — allure libre</span>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>À mettre en avant aujourd'hui :</strong> le Kadiouk Trail Casamance (29 nov – 6 déc 2026) — des places sont encore disponibles. Voir l'onglet dédié pour la fiche complète.
+      </div>
+
+      <h2>Prochains séjours</h2>
+      <div class="card-grid">
+        <div class="card dest-card" onclick="showDest('kirghiz')">
+          <span class="flag">🏔️</span>
+          <span class="badge badge-green">28 juin – 7 juil 2026</span>
+          <div class="dest-name">Nomad Trail Kirghizistan</div>
+          <div class="dest-meta">Kirghizistan · 10 jours · 45 participants max<br>Steppes &amp; montagnes<br>Asie centrale confidentielle</div>
+          <div class="dest-price">3 100 €</div>
+          <div><span class="dest-tag">🌏 La plus confidentielle</span></div>
+        </div>
+        <div class="card dest-card featured" onclick="showDest('kadiouk-mini')">
+          <span class="flag">🌍</span>
+          <span class="badge badge-hot">⭐ Places dispo · 29 nov – 6 déc 2026</span>
+          <div class="dest-name">Kadiouk Trail Casamance</div>
+          <div class="dest-meta">Sénégal · 8j/7n · 6 étapes<br>60 ou 120 km · Solidaire<br>Vol direct inclus</div>
+          <div class="dest-price">2 650 €</div>
+          <div><span class="dest-tag">🤝 La plus solidaire</span></div>
+        </div>
+        <div class="card dest-card" onclick="showDest('kenya')">
+          <span class="flag">🦒</span>
+          <span class="badge badge-green">7 – 16 fév 2027</span>
+          <div class="dest-name">Kimbia Kenya</div>
+          <div class="dest-meta">Kenya · 9j/8n · 5 étapes<br>56 ou 91 km · Safari trail<br>Solidaire · Erik Clavery</div>
+          <div class="dest-price">2 950 €</div>
+          <div><span class="dest-tag">🦒 La plus spectaculaire</span></div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <h2>Anciennes destinations <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink-30)">— peuvent revenir à tout moment</span></h2>
+      <p style="font-size:12px;color:var(--ink-60);margin-bottom:16px">Exaequo n'abandonne pas ses destinations — elles reviennent régulièrement entre deux éditions. S'inscrire à la newsletter = être informé en priorité.</p>
+      <div class="anc-grid">
+        <div class="anc-card" onclick="showDest('argentine')">
+          <div class="anc-flag">🇦🇷</div>
+          <div class="anc-name">NOA Trail · Argentine</div>
+          <div class="anc-desc">Andes · Cordillère · 13j · 50 ou 90 km · 6 étapes</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">3 790 € (réf.)</div>
+          <div><span class="dest-tag">⏱️ La plus longue</span></div>
+        </div>
+        <div class="anc-card" onclick="showDest('irlande')">
+          <div class="anc-flag">🇮🇪</div>
+          <div class="anc-name">The Irish Trail · Irlande</div>
+          <div class="anc-desc">Wild Atlantic Way · 8j/7n · 65 ou 90 km · 7 éditions</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">2 500 € (réf.)</div>
+          <div><span class="dest-tag">🍺 La plus festive</span></div>
+        </div>
+        <div class="anc-card" onclick="showDest('norvege')">
+          <div class="anc-flag">🇳🇴</div>
+          <div class="anc-name">Norway Fjord Trail</div>
+          <div class="anc-desc">Sognefjord · Trolltunga · 7j · 41 ou 60 km · D+ significatif</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">2 420 € (réf.)</div>
+          <div><span class="dest-tag">⛰️ La plus technique</span></div>
+        </div>
+        <div class="anc-card" onclick="showDest('ecosse')">
+          <div class="anc-flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
+          <div class="anc-name">Scottish Highlands Trail</div>
+          <div class="anc-desc">Écosse · 8j/7n · 5 étapes · 70 ou 106 km</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">2 350 € (réf.)</div>
+          <div><span class="dest-tag">🏰 La plus culturelle</span></div>
+        </div>
+        <div class="anc-card" onclick="showDest('capvert')">
+          <div class="anc-flag">🇨🇻</div>
+          <div class="anc-name">Cabo Verde · Cap-Vert</div>
+          <div class="anc-desc">8j/7n · 5 étapes · 53 ou 95 km · vol non inclus</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">1 900 € + vol (réf.)</div>
+          <div><span class="dest-tag">🏔️ La plus dénivelée</span></div>
+        </div>
+        <div class="anc-card" onclick="showDest('jordanie')">
+          <div class="anc-flag">🇯🇴</div>
+          <div class="anc-name">Petra Jordan Trail</div>
+          <div class="anc-desc">Jordanie · 8j/7n · 5 étapes · 60 ou 85 km</div>
+          <div style="font-size:13px;font-weight:600;color:#C4622D;margin-top:8px">2 650 € (réf.)</div>
+          <div><span class="dest-tag">🏜️ Les plus beaux paysages</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL (destinations) -->
+    <div id="dest-detail" style="display:none">
+      <button class="back-btn" onclick="hideDest()">← Retour aux destinations</button>
+      <div id="dest-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- ═══ KADIOUK ═══ -->
+  <div id="page-kadiouk" class="page">
+    <div class="page-title">Kadiouk Trail Casamance</div>
+    <div class="page-subtitle">Sénégal · 29 novembre — 6 décembre 2026</div>
+
+    <div class="notice">
+      <strong>Places encore disponibles.</strong> Inscriptions jusqu'au 15 septembre 2026. Vol direct Paris Orly ↔ Cap Skirring (Transavia).
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-n">6</div><div class="stat-l">étapes</div></div>
+      <div class="stat"><div class="stat-n">8j</div><div class="stat-l">7 nuits</div></div>
+      <div class="stat"><div class="stat-n">60/120</div><div class="stat-l">km au choix</div></div>
+      <div class="stat"><div class="stat-n">2 650€</div><div class="stat-l">tout compris</div></div>
+      <div class="stat"><div class="stat-n">45</div><div class="stat-l">participants max</div></div>
+    </div>
+
+    <h2>Format</h2>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Distance courte</div>
+        <div class="meta-val">~60 km</div>
+        <div class="meta-sub">~10 km/j · marche ou course</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Distance longue</div>
+        <div class="meta-val">~120 km</div>
+        <div class="meta-sub">~20 km/j · course uniquement</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Difficulté technique</div>
+        <div class="meta-val">Facile</div>
+        <div class="meta-sub">Peu de D+ · terrain roulant</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Difficulté physique</div>
+        <div class="meta-val">Moyen</div>
+        <div class="meta-sub">Cumul sur 6 jours</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Allure</div>
+        <div class="meta-val">Libre</div>
+        <div class="meta-sub">Aucune barrière horaire</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Option confort</div>
+        <div class="meta-val">+100 €</div>
+        <div class="meta-sub">Chambre toutes les nuits</div>
+      </div>
+    </div>
+
+    <h2>Programme jour par jour</h2>
+    <div class="prog-list">
+      <div class="prog-row"><div class="prog-day">J1 · 29 nov.</div><div><div class="prog-title">✈ Arrivée à Ziguinchor</div><div class="prog-desc">Vol Transavia Paris Orly 07h00 → Cap Skirring 12h20. Transfert, découverte, briefing.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J2 · 30 nov.</div><div><div class="prog-title">Étape 1 — Agnack · 10 ou 20 km</div><div class="prog-desc">Forêt tropicale, villages. Après-midi : visite association Futur au Présent.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J3 · 1er déc.</div><div><div class="prog-title">Étape 2 — Affiniam · 11 ou 20 km</div><div class="prog-desc">Île dans la brousse, Djilapao. Visite marché folklorique de Ziguinchor.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J4 · 2 déc.</div><div><div class="prog-title">Étape 3 — Pointe St-Georges · 11 ou 20 km</div><div class="prog-desc">Baobabs, rizières, fleuve Casamance. Nuit en campement. Escalade dans un baobab !</div></div></div>
+      <div class="prog-row"><div class="prog-day">J5 · 3 déc.</div><div><div class="prog-title">Étape 4 — Île de Niomoune · 11 ou 19,5 km</div><div class="prog-desc">Traversée en pirogue. Campement nature d'Alouga.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J6 · 4 déc.</div><div><div class="prog-title">Étape 5 — Hitou · 11 ou 20 km · « Au bout du monde »</div><div class="prog-desc">Village accessible uniquement en pirogue. Traditions animistes. Dîner festif et musical.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J7 · 5 déc.</div><div><div class="prog-title">Étape 6 — Djembering → plage · 8 ou 16 km</div><div class="prog-desc">Tuk-tuk, villages, arrivée sur l'océan. Surf en option. Soirée festive à Cap Skirring.</div></div></div>
+      <div class="prog-row"><div class="prog-day">J8 · 6 déc.</div><div><div class="prog-title">✈ Retour Paris Orly</div><div class="prog-desc">Cap Skirring 13h30 → Paris Orly 22h00.</div></div></div>
+    </div>
+
+    <h2>Les 6 étapes</h2>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Lieu</th><th>Courte</th><th>Longue</th><th>Terrain</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Agnack</td><td>10 km · 81 D+</td><td>20 km · 162 D+</td><td>Forêt tropicale, villages</td></tr>
+        <tr><td>2</td><td>Affiniam</td><td>11 km · 50 D+</td><td>20 km · 70 D+</td><td>Île, brousse, Djilapao</td></tr>
+        <tr><td>3</td><td>Pointe St-Georges</td><td>11,3 km · 14 D+</td><td>20 km · 34 D+</td><td>Baobabs, rizières, fleuve</td></tr>
+        <tr><td>4</td><td>Île de Niomoune</td><td>11 km · 25 D+</td><td>19,5 km · 45 D+</td><td>Île, villages, pirogue</td></tr>
+        <tr><td>5</td><td>Hitou</td><td>11 km · 40 D+</td><td>20 km · 80 D+</td><td>Bout du monde, sable</td></tr>
+        <tr><td>6</td><td>Djembering</td><td>8 km · 10 D+</td><td>16 km · 25 D+</td><td>Villages → plage → océan</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Inclus / non inclus</h2>
+    <div class="two-col">
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:8px">Inclus</p>
+        <ul class="inclus-list">
+          <li>Vol A/R direct Paris Orly ↔ Cap Skirring</li>
+          <li>Hébergements (hôtels + campements)</li>
+          <li>Tous les repas (sauf J7 libre)</li>
+          <li>Transports (bus, pirogue, tuk-tuk…)</li>
+          <li>Organisation de course + médecin</li>
+          <li>Dossard, médaille, tee-shirt technique</li>
+          <li>Encadrement (~6 personnes)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-60);margin-bottom:8px">Non inclus</p>
+        <ul class="exclus-list">
+          <li>Repas J7 à Cap Skirring</li>
+          <li>Boissons hors eau</li>
+          <li>Activités optionnelles (surf…)</li>
+          <li>Assurance rapatriement (obligatoire)</li>
+          <li>Dépenses personnelles</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Dimension solidaire</h2>
+    <div class="notice notice-green" style="margin-bottom:24px">
+      <strong>5 000 € reversés</strong> à l'association Futur au Présent (Ziguinchor). Visite dès le J2 — échanges avec les jeunes filles et bénévoles. Dons déductibles à 66 % des impôts.
+    </div>
+
+    <h2>Pratique Sénégal</h2>
+    <div class="pills">
+      <span class="pill">✓ Aucun visa requis</span>
+      <span class="pill">✓ Langue française</span>
+      <span class="pill">Passeport valide 6 mois</span>
+      <span class="pill">Fièvre jaune recommandée</span>
+      <span class="pill">Antipaludéen conseillé</span>
+      <span class="pill">FCFA · 1 € ≈ 700 FCFA</span>
+      <span class="pill">Saison sèche · 25–32 °C</span>
+      <span class="pill">Montre GPS obligatoire</span>
+    </div>
+
+    <h2>Hébergements</h2>
+    <table class="tbl">
+      <thead><tr><th>Nuits</th><th>Lieu</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>3 nuits</td><td>Hôtel Le Perroquet, Ziguinchor</td><td>Hôtel confortable</td></tr>
+        <tr><td>1 nuit</td><td>Campement Pointe St-Georges</td><td>Chambre vue fleuve</td></tr>
+        <tr><td>1 nuit</td><td>Campement Alouga, Niomoune</td><td>Tente ou chambre · toilettes sèches</td></tr>
+        <tr><td>1 nuit</td><td>Hôtel Cachouane</td><td>Hôtel</td></tr>
+        <tr><td>1 nuit</td><td>Hôtel Cap Skirring</td><td>Hôtel confort · bord de plage</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Inscription</h2>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Acompte</div><div class="meta-val">800 € + 39,50 € frais</div></div>
+      <div class="meta-item"><div class="meta-label">Solde</div><div class="meta-val">Avant le 30 sept. 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Clôture</div><div class="meta-val">15 sept. 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Réductions</div><div class="meta-val">−5 % groupe / fidélité / parrainage</div><div class="meta-sub">Non cumulables</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-60)">Documents requis : passeport, photo, certificat médical de non contre-indication à la pratique sportive en compétition, attestation assurance rapatriement.</p>
+  </div>
+
+  <!-- ═══ PITCH ═══ -->
+  <div id="page-pitch" class="page">
+    <div class="page-title">Pitchs à l'oral</div>
+    <div class="page-subtitle">Restez détendu · Adaptez selon l'interlocuteur · L'objectif : faire rêver, pas vendre</div>
+
+    <div class="pitch-block">
+      <div class="pitch-head">
+        <div class="pitch-label">Pour un coureur confirmé · 30 sec – 1 min</div>
+        <div class="pitch-context">Quelqu'un qui fait déjà des trails, cherche une nouvelle aventure</div>
+      </div>
+      <div class="pitch-body">
+        « Imagine : tu te réveilles le matin, tu enfiles tes chaussures de trail, et tu cours à travers une forêt tropicale sous les encouragements des enfants du village. L'après-midi, tu montes dans une pirogue pour rejoindre une île accessible nulle part ailleurs. C'est ça le Kadiouk Trail en Casamance. Six étapes de 10 à 20 km par jour, des paysages qui changent chaque matin — mangroves, rizières, plage, forêt — et à l'arrivée, des habitants qui t'accueillent comme si tu faisais partie de la famille. Techniquement facile, pas de dénivelé démentiel, mais une intensité qui vient d'ailleurs : de l'humain, des rencontres, de l'immersion totale. Le genre d'aventure dont tu parles encore dix ans après. »
+      </div>
+    </div>
+
+    <div class="pitch-block">
+      <div class="pitch-head">
+        <div class="pitch-label">Pour un accompagnant ou marcheur</div>
+        <div class="pitch-context">Quelqu'un hésitant sur son niveau, ou qui vient avec un proche coureur</div>
+      </div>
+      <div class="pitch-body">
+        « Ce qui est super avec ce séjour, c'est que la course c'est le matin — et après, tout le groupe est ensemble. Que tu aies couru 10 ou 20 km, tout le monde mange au même endroit, visite le même village, monte dans la même pirogue. Sur la courte distance, c'est environ 10 km par jour — une belle balade sportive, on peut la marcher. Et les personnes qui ne veulent pas courir du tout peuvent suivre en van et retrouver le groupe à l'arrivée de chaque étape. Personne n'est laissé de côté, aucune pression de chrono. »
+      </div>
+    </div>
+
+    <div class="pitch-block">
+      <div class="pitch-head">
+        <div class="pitch-label">Accroche stand · 15 secondes</div>
+        <div class="pitch-context">Quand quelqu'un passe devant le stand sans s'arrêter</div>
+      </div>
+      <div class="pitch-body">
+        « On fait des trails à étapes dans des endroits incroyables — tu cours le matin, tu découvres un pays l'après-midi. Le prochain c'est en Casamance, au Sénégal, fin novembre. 10 ou 20 km par jour, tout compris depuis Paris, avec un projet solidaire dedans. Vous êtes plutôt coureurs, marcheurs, les deux ? »
+      </div>
+    </div>
+
+    <div class="pitch-block">
+      <div class="pitch-head">
+        <div class="pitch-label">Pour les anciennes destinations</div>
+        <div class="pitch-context">Quelqu'un qui demande « vous faites l'Écosse / la Norvège / l'Argentine ? »</div>
+      </div>
+      <div class="pitch-body">
+        « En 13 ans, on a fait l'Irlande, la Norvège, l'Écosse, l'Argentine, le Kenya, le Cap-Vert, la Jordanie... Les anciennes destinations reviennent régulièrement — ce n'est pas qu'elles sont abandonnées, c'est qu'on prend le temps de peaufiner les tracés et les partenariats locaux entre deux éditions. Le mieux c'est de laisser votre email ici, comme ça vous serez les premiers informés quand on relance. »
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FAQ ═══ -->
+  <div id="page-faq" class="page">
+    <div class="page-title">FAQ & objections</div>
+    <div class="page-subtitle">Cliquez sur une question pour afficher la réponse</div>
+
+    <div class="faq-cat">Sur la course et le format</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">C'est pour quel niveau ? Je ne suis pas coureur de compétition… <span class="chevron">▾</span></button><div class="faq-a">Le niveau minimum, c'est la marche sportive. Sur la courte distance (~10 km/jour au Kadiouk), on peut marcher. Il n'y a aucune barrière horaire, aucune sélection. Si vous courez des trails de temps en temps, vous serez à l'aise. La longue distance (~20 km/jour) est pour ceux qui veulent se dépasser. Le défi sur ces séjours, c'est surtout le cumul sur 6 jours, pas une étape en particulier.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Et si mon partenaire ne court pas ? <span class="chevron">▾</span></button><div class="faq-a">Les accompagnants paient le même tarif et bénéficient de quasiment toutes les prestations. Ils peuvent marcher la courte distance ou suivre en véhicule et rejoindre le groupe à l'arrivée de chaque étape. Le programme culturel des après-midis est commun à tout le groupe.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Peut-on changer de format (courte/longue) en cours de séjour ? <span class="chevron">▾</span></button><div class="faq-a">Oui. On choisit son format à l'inscription, mais on peut le modifier jusqu'au départ. Et même sur place, selon sa forme du jour, on peut passer d'une distance à l'autre — sans figurer au classement de l'étape concernée. Aucune pression.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">C'est quoi le terrain ? Beaucoup de D+ ? <span class="chevron">▾</span></button><div class="faq-a">Au Kadiouk : très roulant, peu de dénivelé. Pistes de latérite, villages, rizières, forêt. Techniquement facile. Des chaussures de trail classiques suffisent. La difficulté physique est moyenne — c'est le cumul sur 6 jours qui fait l'effet.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">C'est une compétition ? Il y a un classement ? <span class="chevron">▾</span></button><div class="faq-a">C'est une compétition loisir : les temps sont chronométrés et il y a un classement par étape pour ceux qui le souhaitent. Mais ce n'est pas l'esprit du séjour. L'allure est libre, personne n'est éliminé, et beaucoup de gens viennent sans se soucier du chrono.</div></div>
+
+    <div class="faq-cat">Sur le tarif et l'organisation</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">2 650 €, c'est vraiment tout inclus ? <span class="chevron">▾</span></button><div class="faq-a">Oui : vol A/R direct depuis Paris, hébergements, tous les repas (sauf le dernier jour libre), transports (bus, pirogue, tuk-tuk…), organisation de course, médecin, dossard, médaille, tee-shirt. Non inclus : boissons hors eau, activités optionnelles J7, assurance rapatriement (obligatoire à souscrire soi-même).</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Il y a des réductions ? <span class="chevron">▾</span></button><div class="faq-a">−5 % à partir de 5 personnes ensemble. −5 % si déjà participé à un séjour Exaequo. −5 % en parrainage. Ces réductions ne se cumulent pas entre elles. La réduction groupe se cumule avec le parrainage.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Comment se passe le paiement ? Et si j'annule ? <span class="chevron">▾</span></button><div class="faq-a">800 € + 39,50 € frais à l'inscription, solde avant le 30 sept. 2026. En cas d'annulation : 100 € retenus jusqu'au 30 juin, montant croissant ensuite, aucun remboursement après le 15 octobre. Une assurance annulation est fortement recommandée.</div></div>
+
+    <div class="faq-cat">Sur la Casamance</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">C'est dangereux, le Sénégal / la Casamance ? <span class="chevron">▾</span></button><div class="faq-a">Le séjour se déroule sur l'axe touristique sécurisé Cap Skirring – Ziguinchor. La Casamance a eu une mauvaise réputation par le passé, mais cet axe côtier est fréquenté par les touristes depuis de nombreuses années sans problème particulier. Exaequo travaille avec des partenaires locaux expérimentés et suit les recommandations officielles.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Il faut des vaccins ? Un visa ? <span class="chevron">▾</span></button><div class="faq-a">Aucun visa requis pour les ressortissants français. Fièvre jaune fortement recommandée (10 jours avant). DTP à jour. Antipaludéen recommandé (Doxycycline — à valider avec votre médecin). Anti-moustique indispensable.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Quelle météo en novembre-décembre ? <span class="chevron">▾</span></button><div class="faq-a">Saison sèche idéale. 25–32 °C, soleil, pas de pluie. Conditions parfaites pour courir le matin et profiter des après-midis. Casquette et crème solaire indispensables.</div></div>
+
+    <div class="faq-cat">Sur la logistique</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">On dort dans des hôtels tout le séjour ? <span class="chevron">▾</span></button><div class="faq-a">Séjour itinérant : 3 nuits hôtel Ziguinchor · 1 nuit campement Pointe St-Georges · 1 nuit campement nature Alouga / Niomoune (tente ou chambre selon option, toilettes sèches) · 1 nuit hôtel Cachouane · 1 nuit hôtel Cap Skirring. Option +100 € pour chambre toutes les nuits (places limitées). Sac de couchage non nécessaire.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Il faut avoir une montre GPS ? <span class="chevron">▾</span></button><div class="faq-a">Oui, un outil de navigation est obligatoire (montre GPS ou smartphone). Parcours balisés + traces GPX envoyées chaque soir sur WhatsApp. L'appli Outdooractive (gratuite, hors connexion) est recommandée.</div></div>
+
+    <div class="faq-cat">Sur le solidaire</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">C'est quoi concrètement le projet solidaire ? <span class="chevron">▾</span></button><div class="faq-a">5 000 € reversés à l'association Futur au Présent (Ziguinchor), qui accompagne des jeunes filles en situation précaire via une maison de l'éducation. Dès le J2 de course, les participants visitent l'asso — c'est un moment fort que tout le monde retient. Dons supplémentaires déductibles à 66 % des impôts.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Peut-on apporter des fournitures scolaires ? <span class="chevron">▾</span></button><div class="faq-a">Oui, mais avec une nuance : Exaequo privilégie l'achat sur place pour soutenir l'économie locale. Fournitures d'occasion en bon état acceptées (cahiers, stylos, sacs, vêtements d'enfant). Pas de matériel neuf acheté en France.</div></div>
+
+    <div class="faq-cat">Sur les autres destinations</div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Les anciennes destinations reviendront-elles ? <span class="chevron">▾</span></button><div class="faq-a">Oui, toutes peuvent revenir. Exaequo prend le temps de renouveler les tracés et les partenariats entre deux éditions. La meilleure façon d'être informé en premier : newsletter sur exaequovoyages.com ou laisser ses coordonnées au stand.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="tFaq(this)">Y a-t-il une limite d'âge ? <span class="chevron">▾</span></button><div class="faq-a">Pratique ouverte à partir de 16 ans (certificat médical). Pas de limite supérieure — les séjours sont multigénérationnels. Pour les moins de 16 ans, contacter directement l'équipe.</div></div>
+  </div>
+
+  <!-- ═══ CONTACT ═══ -->
+  <div id="page-contact" class="page">
+    <div class="page-title">Contact & arguments clés</div>
+    <div class="page-subtitle">Tout ce qu'il faut pour finir une conversation au stand</div>
+
+    <h2>Contacts</h2>
+    <div style="border:1px solid var(--ink-30);border-radius:var(--radius);overflow:hidden;margin-bottom:28px">
+      <div class="contact-row" style="padding:12px 18px"><span class="contact-icon">📞</span><span class="contact-label">Téléphone</span><span class="contact-val">02 31 53 94 17</span></div>
+      <div class="contact-row" style="padding:12px 18px"><span class="contact-icon">✉️</span><span class="contact-label">Email</span><span class="contact-val">contact@exaequovoyages.com</span></div>
+      <div class="contact-row" style="padding:12px 18px"><span class="contact-icon">🌐</span><span class="contact-label">Site</span><span class="contact-val">exaequovoyages.com</span></div>
+      <div class="contact-row" style="padding:12px 18px"><span class="contact-icon">📸</span><span class="contact-label">Réseaux</span><span class="contact-val">@exaequovoyages (Facebook & Instagram)</span></div>
+      <div class="contact-row" style="padding:12px 18px"><span class="contact-icon">#</span><span class="contact-label">Immatriculation</span><span class="contact-val">IM014180001</span></div>
+    </div>
+
+    <h2>Pourquoi Exaequo ?</h2>
+    <div class="pills">
+      <span class="pill">Créé en 2013 · 9 destinations</span>
+      <span class="pill">Tracés 100 % inédits</span>
+      <span class="pill">Deux distances sur chaque séjour</span>
+      <span class="pill">45–55 participants max</span>
+      <span class="pill">Tout compris : vol, hébergement, repas, transports, course</span>
+      <span class="pill">Médecin sur place à chaque étape</span>
+      <span class="pill">Certains séjours avec projet solidaire local</span>
+      <span class="pill">Allure libre — aucune barrière horaire</span>
+      <span class="pill">Accessible dès la marche sportive</span>
+      <span class="pill">Ouvert aux accompagnants non-coureurs</span>
+      <span class="pill">Traces GPX quotidiennes sur WhatsApp</span>
+      <span class="pill">Groupes à dimension humaine</span>
+    </div>
+
+    <h2>Pour les anciennes destinations</h2>
+    <div style="border:1px solid var(--ink-30);border-radius:var(--radius);padding:16px 18px;font-size:13px;line-height:1.8;color:var(--ink-60)">
+      Laisser les coordonnées (nom + email) pour la newsletter. Formule à dire : <em>« Je note votre email et vous serez parmi les premiers à être contactés quand on relance cette destination. »</em>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const PAGES = ['destinations','kadiouk','pitch','faq','contact'];
+
+function goTo(id) {
+  PAGES.forEach(p => {
+    document.getElementById('page-'+p).classList.remove('active');
+  });
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[onclick="goTo(\''+id+'\')"]').forEach(b => b.classList.add('active'));
+  window.scrollTo(0, 0);
+  // reset dest panel when leaving
+  if (id !== 'destinations') {
+    document.getElementById('dest-list').style.display = 'block';
+    document.getElementById('dest-detail').style.display = 'none';
+  }
+}
+
+function tFaq(el) {
+  const a = el.nextElementSibling;
+  const open = a.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(x => x.classList.remove('open'));
+  document.querySelectorAll('.faq-q.open').forEach(x => x.classList.remove('open'));
+  if (!open) { a.classList.add('open'); el.classList.add('open'); }
+}
+
+const DESTS = {
+  'kadiouk-mini': {
+    flag:'🌍', badge:'badge-hot', badgeText:'⭐ Places disponibles',
+    name:'Kadiouk Trail Casamance', sub:'Sénégal · 29 nov – 6 déc 2026 · 8j/7n',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">La Casamance est le joyau secret du Sénégal : luxuriante, sauvage, préservée. Six étapes entre mangroves, rizières et villages, avec une pirogue pour seul transport sur certains tronçons.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Distances</div><div class="meta-val">~60 ou ~120 km</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif</div><div class="meta-val" style="color:var(--terracotta)">2 650 € tout compris</div></div>
+      <div class="meta-item"><div class="meta-label">Niveau</div><div class="meta-val">Marche sportive min.</div></div>
+      <div class="meta-item"><div class="meta-label">Solidaire</div><div class="meta-val">Futur au Présent</div></div>
+    </div>
+    <p style="font-size:13px;color:#6B6560">→ Voir l'onglet <strong>★ Kadiouk</strong> pour la fiche complète.</p>`
+  },
+  kirghiz: {
+    flag:'🏔️', badge:'badge-green', badgeText:'Prochain séjour',
+    name:'Nomad Trail Kirghizistan', sub:'28 juin – 7 juillet 2026 · 10 jours · 45 participants max',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">L'Asie centrale à l'état brut. Steppes infinies, lacs turquoise, yourtes et cavaliers nomades. Trail à étapes entre le canyon de Konorchek, le lac Issyk-Koul et les montagnes du Tian Shan. Une destination encore confidentielle, pour les aventuriers curieux d'ailleurs.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-val">10 jours</div></div>
+      <div class="meta-item"><div class="meta-label">Participants</div><div class="meta-val">45 max</div></div>
+      <div class="meta-item"><div class="meta-label">Terrain</div><div class="meta-val">Steppes, montagnes, canyons</div><div class="meta-sub">Terrain montagneux · altitude</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif</div><div class="meta-val" style="color:#C4622D">3 100 € + 46,50 € frais</div><div class="meta-sub">Vol inclus</div></div>
+      <div class="meta-item"><div class="meta-label">Niveau minimum</div><div class="meta-val">Marche de montagne sportive</div></div>
+      <div class="meta-item"><div class="meta-label">Inscriptions</div><div class="meta-val">Ouvertes jusqu'au 30 avril 2026</div></div>
+    </div>
+    <div class="notice" style="margin-top:12px;font-size:12px">Les distances précises par étape ne sont pas encore publiées. Pour toute info : contact@exaequovoyages.com · 02 31 53 94 17</div>`
+  },
+  kenya: {
+    flag:'🦒', badge:'badge-green', badgeText:'Inscriptions ouvertes',
+    name:'Kimbia Kenya', sub:'7 au 16 février 2027 · 9j/8n · 55 participants max',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Le projet fondateur d'Exaequo Voyages (2012). 14e édition en 2027, près de 500 participants depuis le début. On court au milieu des zèbres et des girafes dans la région des Grands Lacs, on traverse des villages Masaïs. Un safari trail tout simplement unique.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Distances</div><div class="meta-val">~56 ou ~91 km</div></div>
+      <div class="meta-item"><div class="meta-label">Étapes</div><div class="meta-val">5 étapes + footing</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif</div><div class="meta-val" style="color:var(--terracotta)">2 950 € tout compris</div></div>
+      <div class="meta-item"><div class="meta-label">Vol</div><div class="meta-val">Direct Air France CDG</div></div>
+      <div class="meta-item"><div class="meta-label">Solidaire</div><div class="meta-val">France Kenya Sport Solidarité</div></div>
+      <div class="meta-item"><div class="meta-label">Ambassadeur 2027</div><div class="meta-val">Erik Clavery</div></div>
+    </div>
+    <div class="notice notice-green">Réductions : −5 % groupe · −5 % fidélité · option cottage +300 €</div>`
+  },
+  argentine: {
+    flag:'🇦🇷', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'NOA Trail · Argentine', sub:'Nord-ouest argentin · 13 jours · 40 participants max',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Cordillère des Andes, canyons multicolores de la Quebrada de Humahuaca (UNESCO), vignobles, forêt tropicale de montagne, salinas lunaires. Un voyage culturellement et visuellement inoubliable entre Salta, Jujuy et Buenos Aires.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-val">13 jours</div></div>
+      <div class="meta-item"><div class="meta-label">Distances</div><div class="meta-val">~50 ou ~90 km · 6 étapes</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">3 790 €</div></div>
+      <div class="meta-item"><div class="meta-label">Hébergement</div><div class="meta-val">Hôtels 3–4 ★</div></div>
+      <div class="meta-item"><div class="meta-label">Points forts</div><div class="meta-val">Quebrada UNESCO, Andes, Buenos Aires</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>`
+  },
+  irlande: {
+    flag:'🇮🇪', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'The Irish Trail · Irlande', sub:'Ouest de l\'Irlande · 8j/7n · 50 participants max · 7 éditions',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Kerry, Dingle, Burren, Connemara, Dublin. Trail sur le Wild Atlantic Way — pubs, musique traditionnelle, falaises de Moher, abbaye de Kylemore. L'Irlande sauvage et authentique.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-val">8j / 7n</div></div>
+      <div class="meta-item"><div class="meta-label">Distances</div><div class="meta-val">~65 ou ~90 km · 5 étapes</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">2 500 €</div></div>
+      <div class="meta-item"><div class="meta-label">Visa / Langue</div><div class="meta-val">Carte d'identité / anglais</div></div>
+      <div class="meta-item"><div class="meta-label">Points forts</div><div class="meta-val">Mont Brandon, Connemara, pubs irlandais</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>`
+  },
+  norvege: {
+    flag:'🇳🇴', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'Norway Fjord Trail · Norvège', sub:'7 jours · 45 participants max',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Immersion dans le Sognefjord et le Hardanger. Bergen (UNESCO), train touristique, croisière en fjord, Voringfossen, Trolltunga (27 km de trek mythique). Terrain : pierriers, tourbe, escaliers — ça se mérite !</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-val">7 jours</div></div>
+      <div class="meta-item"><div class="meta-label">Distances</div><div class="meta-val">41 km/950 D+ ou 60 km/2700 D+</div></div>
+      <div class="meta-item"><div class="meta-label">Difficulté</div><div class="meta-val">Moyen–Difficile</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">2 420 €</div></div>
+      <div class="meta-item"><div class="meta-label">Incontournable</div><div class="meta-val">Trek Trolltunga 27 km</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>`
+  },
+  ecosse: {
+    flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'Scottish Highlands Trail · Écosse', sub:'8j / 7n · 45 participants max · 5 étapes de course',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Trail dans les Highlands entre lochs, châteaux et tourbières — des Cairngorms aux Trossachs. Paysages sauvages, culture celte vivante, soirées pub, château de Balmoral, croisière sur le Loch Ness.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Distance courte</div><div class="meta-val">70 km · 1 500 D+</div><div class="meta-sub">Marche ou course</div></div>
+      <div class="meta-item"><div class="meta-label">Distance longue</div><div class="meta-val">106 km · 2 200 D+</div><div class="meta-sub">Course uniquement</div></div>
+      <div class="meta-item"><div class="meta-label">Difficulté</div><div class="meta-val">Moyen</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">2 350 €</div><div class="meta-sub">Vol inclus</div></div>
+      <div class="meta-item"><div class="meta-label">Visa</div><div class="meta-val">Carte d'identité suffit</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>`
+  },
+  capvert: {
+    flag:'🇨🇻', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'Cabo Verde Ribeira Trail · Cap-Vert', sub:'8j / 7n · 50 participants max · 5 étapes · Santo Antão & São Vicente',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">La destination la plus dénivelée d'Exaequo Voyages — ribeiras vertigineuses, volcans, canyons et culture créole. Trail entre deux îles brutes et sauvages du Cap-Vert, avec des sentiers à couper le souffle.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Distance courte</div><div class="meta-val">53 km · 2 500 D+</div><div class="meta-sub">Marche rapide ou course</div></div>
+      <div class="meta-item"><div class="meta-label">Distance longue</div><div class="meta-val">95 km · 3 800 D+</div><div class="meta-sub">Course uniquement</div></div>
+      <div class="meta-item"><div class="meta-label">Difficulté</div><div class="meta-val">Difficile ★★★★☆</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">1 900 € (sans le vol)</div><div class="meta-sub">⚠️ Vol à réserver soi-même (TAP)</div></div>
+      <div class="meta-item"><div class="meta-label">Hébergement</div><div class="meta-val">Hôtels 3 ou 4 ★</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>
+    <div class="notice" style="margin-top:12px;font-size:12px">⚠️ Particularité : le vol n'est pas inclus dans le tarif — chaque participant réserve son propre vol (TAP Portugal avec escale à Lisbonne).</div>`
+  },
+  jordanie: {
+    flag:'🇯🇴', badge:'badge-grey', badgeText:'Ancienne destination',
+    name:'Petra Jordan Trail · Jordanie', sub:'8j / 7n · 39 participants max · 5 étapes de course',
+    body:`<p style="font-size:13px;color:#6B6560;line-height:1.8;margin-bottom:16px">Pétra la cité rose, Wadi Rum le désert blanc, Mer Morte, cité romaine de Jerash, village de Dana. Trail à travers les paysages les plus spectaculaires de la Jordanie — nuits à la bédouine incluses.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Distance courte</div><div class="meta-val">60 km · 890 D+</div><div class="meta-sub">Marche ou course</div></div>
+      <div class="meta-item"><div class="meta-label">Distance longue</div><div class="meta-val">85 km · 1 460 D+</div><div class="meta-sub">Course uniquement</div></div>
+      <div class="meta-item"><div class="meta-label">Difficulté</div><div class="meta-val">Moyen</div></div>
+      <div class="meta-item"><div class="meta-label">Tarif de référence</div><div class="meta-val">2 650 €</div><div class="meta-sub">Vol + e-visa inclus</div></div>
+      <div class="meta-item"><div class="meta-label">Hébergement</div><div class="meta-val">Hôtels + nuits bédouines</div></div>
+      <div class="meta-item"><div class="meta-label">Prochaine édition</div><div class="meta-val">Pas encore planifiée</div></div>
+    </div>`
+  }
+};
+
+function showDest(id) {
+  const d = DESTS[id];
+  if (!d) return;
+  document.getElementById('dest-list').style.display = 'none';
+  document.getElementById('dest-detail').style.display = 'block';
+  document.getElementById('dest-detail-content').innerHTML = `
+    <div class="detail-header">
+      <div class="detail-flag">${d.flag}</div>
+      <div>
+        <span class="badge ${d.badge}" style="margin-bottom:6px">${d.badgeText}</span>
+        <div class="detail-title">${d.name}</div>
+        <div class="detail-sub">${d.sub}</div>
+      </div>
+    </div>
+    ${d.body}
+    <div class="notice" style="margin-top:20px">Pour plus d'infos sur cette destination : <strong>contact@exaequovoyages.com</strong> · 02 31 53 94 17 · exaequovoyages.com</div>
+  `;
+  window.scrollTo(0, 0);
+}
+
+function hideDest() {
+  document.getElementById('dest-list').style.display = 'block';
+  document.getElementById('dest-detail').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
